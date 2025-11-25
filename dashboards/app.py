@@ -61,9 +61,32 @@ def load_data():
         customers['join_date'] = pd.to_datetime(customers['join_date'])
         return transactions, customers
     except FileNotFoundError:
-        st.error("Data files not found. Please generate data first using generate_data.py")
-        return None, None
-
+        # Generate sample data for demo purposes
+        st.info("Loading demo data - generating sample customer transactions...")
+        np.random.seed(42)
+        n_customers = 500
+        n_transactions = 5000
+        
+        # Generate customers
+        customer_ids = [f'CUST_{i:04d}' for i in range(1, n_customers + 1)]
+        join_dates = pd.date_range(start='2020-01-01', periods=n_customers, freq='D')
+        customers = pd.DataFrame({
+            'customer_id': customer_ids,
+            'join_date': join_dates,
+            'segment': np.random.choice(['Premium', 'Standard', 'Basic'], n_customers),
+            'region': np.random.choice(['North', 'South', 'East', 'West'], n_customers)
+        })
+        
+        # Generate transactions
+        transactions = pd.DataFrame({
+            'transaction_id': [f'TXN_{i:06d}' for i in range(1, n_transactions + 1)],
+            'customer_id': np.random.choice(customer_ids, n_transactions),
+            'transaction_date': pd.date_range(start='2020-01-01', periods=n_transactions, freq='H'),
+            'amount': np.random.exponential(50, n_transactions) + 10,
+            'product_category': np.random.choice(['Electronics', 'Clothing', 'Food', 'Home'], n_transactions)
+        })
+        
+        return transactions, customers
 
 def calculate_rfm_scores(transactions):
     """Calculate RFM scores for customers."""
