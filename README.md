@@ -1,5 +1,7 @@
 # 🎯 Customer Lifetime Value (CLV) Prediction System
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://clv-prediction-system.streamlit.app)
+
 > Predicting customer lifetime value to help e-commerce businesses identify high-value customers and optimize marketing spend
 
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
